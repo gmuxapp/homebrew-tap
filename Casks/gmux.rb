@@ -3,7 +3,7 @@ cask "gmux" do
   name "gmux"
   desc "Terminal session orchestration — manage AI agents, test runners, and long-running processes from your browser"
   homepage "https://gmux.app"
-  version "0.2.0"
+  version "0.2.1"
 
   livecheck do
     skip "Auto-generated on release."
@@ -15,22 +15,22 @@ cask "gmux" do
   on_macos do
     on_intel do
       url "https://github.com/gmuxapp/gmux/releases/download/v#{version}/gmux_#{version}_darwin_amd64.zip"
-      sha256 "86fc94bab18946bc8fdde1dcba5535ab0df760c77e0aad49a34477c1e79ed024"
+      sha256 "7dbf1a9bd1e183f5c79d0911662465eba19a6108245d8f5e87435c6c716bbb6a"
     end
     on_arm do
       url "https://github.com/gmuxapp/gmux/releases/download/v#{version}/gmux_#{version}_darwin_arm64.zip"
-      sha256 "36cb04ab21ddb9412a3c53b89a1862bcc8699cbca86c50663e48ccdff2264779"
+      sha256 "a121156b5259e74ea2e91304f67f1b10adfb944d9881cb63a422d866ae906c4f"
     end
   end
 
   on_linux do
     on_intel do
       url "https://github.com/gmuxapp/gmux/releases/download/v#{version}/gmux_#{version}_linux_amd64.tar.gz"
-      sha256 "42efab1ea7d27ad1049bf9558a8ba0a1b83c0c4d5932af3ab828f7aedd26b601"
+      sha256 "0032bde4203005d3e1e6ca64deaa3e5d3fa2836c173b0617975e7ae7776e4aab"
     end
     on_arm do
       url "https://github.com/gmuxapp/gmux/releases/download/v#{version}/gmux_#{version}_linux_arm64.tar.gz"
-      sha256 "d12bafeab1341b5a67d166b73c413c570902aff0404ef35bddce6bbf12fbf221"
+      sha256 "abefd279086ed0b76021a03acaed6735f4a866731b4880db9cbcaa37057edcd5"
     end
   end
 
