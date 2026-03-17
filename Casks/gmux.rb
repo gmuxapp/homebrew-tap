@@ -3,7 +3,7 @@ cask "gmux" do
   name "gmux"
   desc "See every running process in your browser"
   homepage "https://gmux.app"
-  version "0.2.4"
+  version "0.3.0"
 
   livecheck do
     skip "Auto-generated on release."
@@ -15,33 +15,30 @@ cask "gmux" do
   on_macos do
     on_intel do
       url "https://github.com/gmuxapp/gmux/releases/download/v#{version}/gmux_#{version}_darwin_amd64.zip"
-      sha256 "c0000cf33d4c67cdf1f88ad8ec5cc8a11ade43bffdc2364b631fdfc82f2c1e74"
+      sha256 "43ed33a235bd346ce356fb4e0abf7b108c8f2eaaec3f0b00c43ca158a09091b5"
     end
     on_arm do
       url "https://github.com/gmuxapp/gmux/releases/download/v#{version}/gmux_#{version}_darwin_arm64.zip"
-      sha256 "6fb89f8962bec467abe6e29ed6fb3639a4739d4e31276c24540dada5a683fa2f"
+      sha256 "4a2d4fcea64f6d4d1cc3f586002b2ab807501746d07c8dbc966bd7cc66f65a33"
     end
   end
 
   on_linux do
     on_intel do
       url "https://github.com/gmuxapp/gmux/releases/download/v#{version}/gmux_#{version}_linux_amd64.tar.gz"
-      sha256 "6793938c3d853e0942d4707e06b9c0606007e12f0aefba3925e18ba5634eba1d"
+      sha256 "07f06bca750ba15117f41c250f0482fa092fec02ccfdcec5580cdd1733d8bea1"
     end
     on_arm do
       url "https://github.com/gmuxapp/gmux/releases/download/v#{version}/gmux_#{version}_linux_arm64.tar.gz"
-      sha256 "d7c4f9e76bfa299bd0d7b4d1483654acf66599220e30ec42c3ff1d9fb360644f"
+      sha256 "63abcae8fd714d267f0824887258be958b29e64bfb8bde9995c5bc5f974d1d25"
     end
   end
 
-  caveats do
-    "Launch a session:"
-    "  gmux claude           # coding agent"
-    "  gmux pytest -x        # test runner"
-    "  gmux make build       # any command"
-    ""
-    "Open the dashboard:"
-    "  open http://localhost:8790"
+  postflight do
+    if OS.mac?
+      system_command "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "#{staged_path}/gmux"]
+      system_command "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "#{staged_path}/gmuxd"]
+    end
   end
 
   # No zap stanza required
