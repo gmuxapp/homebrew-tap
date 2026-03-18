@@ -3,7 +3,7 @@ cask "gmux" do
   name "gmux"
   desc "See every running process in your browser"
   homepage "https://gmux.app"
-  version "0.4.1"
+  version "0.4.2"
 
   livecheck do
     skip "Auto-generated on release."
@@ -15,22 +15,22 @@ cask "gmux" do
   on_macos do
     on_intel do
       url "https://github.com/gmuxapp/gmux/releases/download/v#{version}/gmux_#{version}_darwin_amd64.zip"
-      sha256 "09b66e35dcd66f773d8e1b7db0c0e778f939097170dbfb872aa03b09ad0a56ca"
+      sha256 "d04a459e0e59e39ff077b229c04c6821f4ca5a5f040830e0ca48ebeb40670e9b"
     end
     on_arm do
       url "https://github.com/gmuxapp/gmux/releases/download/v#{version}/gmux_#{version}_darwin_arm64.zip"
-      sha256 "c945a46d793b1808e099ce5325b8022a3d4994b514ffd0387126e4b6d766a007"
+      sha256 "f4bd9dc70cbc9f4e1d96565eea8ee618b381bd839b091a3d07b000f1aeb977d8"
     end
   end
 
   on_linux do
     on_intel do
       url "https://github.com/gmuxapp/gmux/releases/download/v#{version}/gmux_#{version}_linux_amd64.tar.gz"
-      sha256 "314e24beb984a3513c576d2b71aa021a1b57fc7af49930f83bccff24ae355d86"
+      sha256 "7bb45d66b86ec5175539d7a6d5160f9e1fdd012916fb36d72ae89f640dd8d88d"
     end
     on_arm do
       url "https://github.com/gmuxapp/gmux/releases/download/v#{version}/gmux_#{version}_linux_arm64.tar.gz"
-      sha256 "5adf54cc82432c66c6a1bf136504da4799a75d729ece785b9ac4f2b2c89a075e"
+      sha256 "7d3fd301a4b0ade1317b23b730f4e8d020947f8f9e25f5e40fe09445ab4d51a4"
     end
   end
 
@@ -39,6 +39,9 @@ cask "gmux" do
       system_command "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "#{staged_path}/gmux"]
       system_command "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "#{staged_path}/gmuxd"]
     end
+    # Shut down any running daemon so the next `gmux` invocation starts
+    # the newly installed version. Sessions stay alive.
+    system_command "#{staged_path}/gmuxd", args: ["shutdown"]
   end
 
   # No zap stanza required
