@@ -3,7 +3,7 @@ cask "gmux" do
   name "gmux"
   desc "See every running process in your browser"
   homepage "https://gmux.app"
-  version "0.4.2"
+  version "0.4.3"
 
   livecheck do
     skip "Auto-generated on release."
@@ -15,22 +15,22 @@ cask "gmux" do
   on_macos do
     on_intel do
       url "https://github.com/gmuxapp/gmux/releases/download/v#{version}/gmux_#{version}_darwin_amd64.zip"
-      sha256 "d04a459e0e59e39ff077b229c04c6821f4ca5a5f040830e0ca48ebeb40670e9b"
+      sha256 "f7d11df8705d9a0a0b65447d6ef0b54f0ccd6dd2c25e1c62d87842457103dc20"
     end
     on_arm do
       url "https://github.com/gmuxapp/gmux/releases/download/v#{version}/gmux_#{version}_darwin_arm64.zip"
-      sha256 "f4bd9dc70cbc9f4e1d96565eea8ee618b381bd839b091a3d07b000f1aeb977d8"
+      sha256 "c99854ee75178bf65732d1f5b2eaf331c72632a51b7c432ebef4cbea431f0c47"
     end
   end
 
   on_linux do
     on_intel do
       url "https://github.com/gmuxapp/gmux/releases/download/v#{version}/gmux_#{version}_linux_amd64.tar.gz"
-      sha256 "7bb45d66b86ec5175539d7a6d5160f9e1fdd012916fb36d72ae89f640dd8d88d"
+      sha256 "9e1bdd2013fb52cb47030b57c029bcedc9b7d752b1d1c4a20c3b233a8aa66348"
     end
     on_arm do
       url "https://github.com/gmuxapp/gmux/releases/download/v#{version}/gmux_#{version}_linux_arm64.tar.gz"
-      sha256 "7d3fd301a4b0ade1317b23b730f4e8d020947f8f9e25f5e40fe09445ab4d51a4"
+      sha256 "2e641d6cc9a8be20ff906b3e898a1999193624f28bfedfb95ec148fd25d5bed9"
     end
   end
 
