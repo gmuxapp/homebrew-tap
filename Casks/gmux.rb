@@ -3,7 +3,7 @@ cask "gmux" do
   name "gmux"
   desc "See every running process in your browser"
   homepage "https://gmux.app"
-  version "0.4.3"
+  version "0.4.4"
 
   livecheck do
     skip "Auto-generated on release."
@@ -15,22 +15,22 @@ cask "gmux" do
   on_macos do
     on_intel do
       url "https://github.com/gmuxapp/gmux/releases/download/v#{version}/gmux_#{version}_darwin_amd64.zip"
-      sha256 "f7d11df8705d9a0a0b65447d6ef0b54f0ccd6dd2c25e1c62d87842457103dc20"
+      sha256 "ce9e4d78522da9c29077a4a67aa21cb6a2c0bd6a8d1b2c7c7b336e086f9f12da"
     end
     on_arm do
       url "https://github.com/gmuxapp/gmux/releases/download/v#{version}/gmux_#{version}_darwin_arm64.zip"
-      sha256 "c99854ee75178bf65732d1f5b2eaf331c72632a51b7c432ebef4cbea431f0c47"
+      sha256 "e3c62528dceb9740a1437f761065d41b1e1fdc63ccc915b4a58b94dd7e12387d"
     end
   end
 
   on_linux do
     on_intel do
       url "https://github.com/gmuxapp/gmux/releases/download/v#{version}/gmux_#{version}_linux_amd64.tar.gz"
-      sha256 "9e1bdd2013fb52cb47030b57c029bcedc9b7d752b1d1c4a20c3b233a8aa66348"
+      sha256 "8d6d15416e1b9f716fa2754c1e5f025d3854beee850dabb62ff0a4a5a3ae1620"
     end
     on_arm do
       url "https://github.com/gmuxapp/gmux/releases/download/v#{version}/gmux_#{version}_linux_arm64.tar.gz"
-      sha256 "2e641d6cc9a8be20ff906b3e898a1999193624f28bfedfb95ec148fd25d5bed9"
+      sha256 "0036734ac095b4b2f0120b87e40fec9946b29ac4b3f5772eb233ad60e8cfab83"
     end
   end
 
@@ -39,9 +39,16 @@ cask "gmux" do
       system_command "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "#{staged_path}/gmux"]
       system_command "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "#{staged_path}/gmuxd"]
     end
-    # Shut down any running daemon so the next `gmux` invocation starts
-    # the newly installed version. Sessions stay alive.
-    system_command "#{staged_path}/gmuxd", args: ["shutdown"]
+    # Seamless daemon upgrade: if a daemon was running, shut it down and
+    # immediately start the new version. If it wasn't running, do nothing —
+    # the next `gmux` invocation will start it on demand.
+    system_command "/bin/sh", args: ["-c", <<~EOS
+      if curl -sf -o /dev/null http://localhost:8790/v1/health 2>/dev/null; then
+        "#{staged_path}/gmuxd" shutdown
+        nohup "#{staged_path}/gmuxd" start </dev/null >/dev/null 2>&1 &
+      fi
+    EOS
+    ]
   end
 
   # No zap stanza required
